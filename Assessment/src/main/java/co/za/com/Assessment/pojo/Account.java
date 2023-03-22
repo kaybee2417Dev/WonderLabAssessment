@@ -19,16 +19,29 @@ public class Account {
     @Column(name = "accountbalance")
     private double accountBalance;
 
-    public Account(int accountId, int accountNo, String accountType, String accountName, double accountBalance) {
+    @Column(name = "accountstatus")
+    private String accountStatus;
+
+    public Account(int accountId, int accountNo, String accountType, String accountName, double accountBalance, String accountStatus) {
         this.accountId = accountId;
         this.accountNo = accountNo;
         this.accountType = accountType;
         this.accountName = accountName;
         this.accountBalance = accountBalance;
+        this.accountStatus = accountStatus;
     }
+
 
     public Account() {
 
+    }
+
+    public String getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(String accountStatus) {
+        this.accountStatus = accountStatus;
     }
 
     public int getAccountId() {
@@ -39,8 +52,8 @@ public class Account {
         this.accountId = accountId;
     }
 
-    public int getAccountNo() {
-        return accountNo;
+    public int getAccountNo(int accountNo) {
+        return this.accountNo;
     }
 
     public void setAccountNo(int accountNo) {
