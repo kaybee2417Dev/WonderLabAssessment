@@ -40,8 +40,10 @@ public class AccountCreationController {
         account.setAccountNo(accountNo);
         if(accountType.equalsIgnoreCase("savings")){
             account.setAccountStatus("Not Active");
+            account.setAccountOverdraft(0.00);
         }else{
             account.setAccountStatus("Active");
+            account.setAccountOverdraft(100000.00);
         }
         account.setAccountBalance(accountBalance);
         account.setAccountName(accountName);

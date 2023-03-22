@@ -19,7 +19,7 @@ public class TransactionsController {
     private String accountStatus;
     private double accountBalance;
 
-    private int updateTransaction;
+    private double overDraftAmount;
 
     private int updateAccount;
 
@@ -40,7 +40,7 @@ public class TransactionsController {
              accountBalance = accountDetails.getAccountBalance();
              accountStatus = accountDetails.getAccountStatus();
              accountType = accountDetails.getAccountType();
-
+             overDraftAmount = accountDetails.getAccountOverdraft();
            /*  if(accountStatus.equalsIgnoreCase("Not Active")){
                  throw new  DataNotFoundException("Account Not Active, Please Deposit R1000.00 to Activate your Savings Account");
              }else{*/
@@ -66,9 +66,26 @@ public class TransactionsController {
 
                  }else if(transactionType.equalsIgnoreCase("Withdrawal")){
 
-                    if(accountType.equalsIgnoreCase("savings") && accountBalance >= 1000){
+                    if(accountType.equalsIgnoreCase("saving") || accountType.equalsIgnoreCase("savings")&& accountBalance >= 1000){
 
                         if(accountBalance >= transactionAmount  ){
+
+                            accountBalance = accountBalance - transactionAmount;
+                            updateAccount = accountService.UpdateAccountBalance(accountNo, accountBalance);
+
+                            // System.out.println("Account No: " + accountDetails.getAccountNo());
+                            transation.setTransactionAccountNo(accountNo);
+                            transation.setTransactionType(transactionType);
+                            transation.setTransactionAmount(transactionAmount);
+
+                            transation = transactionsService.saveTransaction(transation);
+                        }else{
+                            throw new  DataNotFoundException("You have Insufficient fund in your Savings Accounts...");
+                        }
+
+                    }else if(accountType.equalsIgnoreCase("cheque") || accountType.equalsIgnoreCase("cheques")){
+
+                        if(accountBalance >= transactionAmount || overDraftAmount >= transactionAmount){
 
                             accountBalance = accountBalance - transactionAmount;
                             updateAccount = accountService.UpdateAccountBalance(accountNo, accountBalance);
