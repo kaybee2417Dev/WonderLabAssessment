@@ -49,7 +49,7 @@ public class TransactionsController {
 
                      if(accountType.equalsIgnoreCase("savings") && accountStatus.equalsIgnoreCase("Not Active")){
 
-                         if(transactionAmount < 10000){
+                         if(transactionAmount < 1000.00){
                              throw new DataNotFoundException("The Minimum amount to Activate a Savings Accounts is + R1000.00");
                          }
                      }
@@ -66,8 +66,26 @@ public class TransactionsController {
 
                  }else if(transactionType.equalsIgnoreCase("Withdrawal")){
 
+                    if(accountType.equalsIgnoreCase("savings") && accountBalance >= 1000){
 
-                 }else if(transactionType.equalsIgnoreCase("Transfer")){
+                        if(accountBalance >= transactionAmount  ){
+
+                            accountBalance = accountBalance - transactionAmount;
+                            updateAccount = accountService.UpdateAccountBalance(accountNo, accountBalance);
+
+                            // System.out.println("Account No: " + accountDetails.getAccountNo());
+                            transation.setTransactionAccountNo(accountNo);
+                            transation.setTransactionType(transactionType);
+                            transation.setTransactionAmount(transactionAmount);
+
+                            transation = transactionsService.saveTransaction(transation);
+                        }else{
+                            throw new  DataNotFoundException("You have Insufficient fund in your Savings Accounts...");
+                        }
+
+                    }else{
+                        throw new  DataNotFoundException("Transactions Probited...");
+                    }
 
                  }else{
                      throw new  DataNotFoundException("Transactions Type does not exists...");
