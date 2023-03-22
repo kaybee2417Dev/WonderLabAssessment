@@ -19,16 +19,19 @@ public class Account {
     @Column(name = "accountbalance")
     private double accountBalance;
 
+    @Column(name = "accountoverdraft")
+    private double accountOverdraft;
     @Column(name = "accountstatus")
     private String accountStatus;
 
-    public Account(int accountId, int accountNo, String accountType, String accountName, double accountBalance, String accountStatus) {
+    public Account(int accountId, int accountNo, String accountType, String accountName, double accountBalance, String accountStatus, double accountOverdraft) {
         this.accountId = accountId;
         this.accountNo = accountNo;
         this.accountType = accountType;
         this.accountName = accountName;
         this.accountBalance = accountBalance;
         this.accountStatus = accountStatus;
+        this.accountOverdraft = accountOverdraft;
     }
 
 
@@ -82,5 +85,13 @@ public class Account {
 
     public void setAccountBalance(double accountBalance) {
         this.accountBalance = accountBalance;
+    }
+
+    public double getAccountOverdraft() {
+        return accountOverdraft;
+    }
+
+    public void setAccountOverdraft(double accountOverdraft) {
+        this.accountOverdraft = accountOverdraft;
     }
 }
