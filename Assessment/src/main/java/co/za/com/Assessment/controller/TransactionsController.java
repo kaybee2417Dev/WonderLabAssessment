@@ -27,6 +27,8 @@ public class TransactionsController {
 
     private Account accountDetails;
     private Transactions transation = new Transactions();
+
+    private Transactions transactions;
     @Autowired
     private AccountCreationService accountService;
 
@@ -41,9 +43,7 @@ public class TransactionsController {
              accountStatus = accountDetails.getAccountStatus();
              accountType = accountDetails.getAccountType();
              overDraftAmount = accountDetails.getAccountOverdraft();
-           /*  if(accountStatus.equalsIgnoreCase("Not Active")){
-                 throw new  DataNotFoundException("Account Not Active, Please Deposit R1000.00 to Activate your Savings Account");
-             }else{*/
+
 
                  if(transactionType.equalsIgnoreCase("Deposit")){
 
@@ -57,13 +57,12 @@ public class TransactionsController {
                      accountBalance = accountBalance + transactionAmount;
                      updateAccount = accountService.UpdateAccountBalance(accountNo, accountBalance);
 
-                    // System.out.println("Account No: " + accountDetails.getAccountNo());
-                     transation.setTransactionAccountNo(accountNo);
+                     /*transation.setTransactionAccountNo(accountNo);
                      transation.setTransactionType(transactionType);
                      transation.setTransactionAmount(transactionAmount);
 
                      transation = transactionsService.saveTransaction(transation);
-
+                    */
                  }else if(transactionType.equalsIgnoreCase("Withdrawal")){
 
                     if(accountType.equalsIgnoreCase("saving") || accountType.equalsIgnoreCase("savings")&& accountBalance >= 1000){
@@ -96,11 +95,7 @@ public class TransactionsController {
 
                                 updateAccount = accountService.UpdateAccountBalanceAndOverDraft(accountNo, accountBalance, overDraftAmount);
 
-
                             }
-
-                            // System.out.println("Account No: " + accountDetails.getAccountNo());
-
                         }else{
                             throw new  DataNotFoundException("You have Insufficient fund in your Cheque Accounts...");
                         }
@@ -112,8 +107,6 @@ public class TransactionsController {
                  }else{
                      throw new  DataNotFoundException("Transactions Type does not exists...");
                  }
-           //  }
-
          }else{
              throw new  DataNotFoundException("Account Does Not Exist...");
          }
@@ -122,17 +115,15 @@ public class TransactionsController {
         transation.setTransactionType(transactionType);
         transation.setTransactionAmount(transactionAmount);
 
-        transation = transactionsService.saveTransaction(transation);
+        transactions = transactionsService.saveTransaction(transation);
 
-        return "Account";
+        return "Transaction Successful...";
     }
 
     public Account findAccountDetailsUsingAccountNo(int accountNo){
          accountDetails = accountService.findAccountByAccountNo(accountNo);
 
         if(accountDetails != null){
-            System.out.println("Account Number found.." + accountDetails.getAccountStatus());
-
             return accountDetails;
         }else{
             throw new DataNotFoundException("Account Number does not exists...");
