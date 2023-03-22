@@ -69,16 +69,8 @@ public class TransactionsController {
                     if(accountType.equalsIgnoreCase("saving") || accountType.equalsIgnoreCase("savings")&& accountBalance >= 1000){
 
                         if(accountBalance >= transactionAmount  ){
-
                             accountBalance = accountBalance - transactionAmount;
                             updateAccount = accountService.UpdateAccountBalance(accountNo, accountBalance);
-
-                            // System.out.println("Account No: " + accountDetails.getAccountNo());
-                            transation.setTransactionAccountNo(accountNo);
-                            transation.setTransactionType(transactionType);
-                            transation.setTransactionAmount(transactionAmount);
-
-                            transation = transactionsService.saveTransaction(transation);
                         }else{
                             throw new  DataNotFoundException("You have Insufficient fund in your Savings Accounts...");
                         }
@@ -87,17 +79,30 @@ public class TransactionsController {
 
                         if(accountBalance >= transactionAmount || overDraftAmount >= transactionAmount){
 
-                            accountBalance = accountBalance - transactionAmount;
-                            updateAccount = accountService.UpdateAccountBalance(accountNo, accountBalance);
+                            if(accountBalance >= transactionAmount){
+                                accountBalance = accountBalance - transactionAmount;
+                                updateAccount = accountService.UpdateAccountBalance(accountNo, accountBalance);
+                            }else if(transactionAmount >= accountBalance && overDraftAmount >= transactionAmount ){
+
+                                double amountShortage, splitAmount;
+
+                                amountShortage = transactionAmount - accountBalance;
+
+                                splitAmount = transactionAmount - amountShortage;
+
+                                accountBalance = accountBalance - splitAmount;
+
+                                overDraftAmount = overDraftAmount - amountShortage;
+
+                                updateAccount = accountService.UpdateAccountBalanceAndOverDraft(accountNo, accountBalance, overDraftAmount);
+
+
+                            }
 
                             // System.out.println("Account No: " + accountDetails.getAccountNo());
-                            transation.setTransactionAccountNo(accountNo);
-                            transation.setTransactionType(transactionType);
-                            transation.setTransactionAmount(transactionAmount);
 
-                            transation = transactionsService.saveTransaction(transation);
                         }else{
-                            throw new  DataNotFoundException("You have Insufficient fund in your Savings Accounts...");
+                            throw new  DataNotFoundException("You have Insufficient fund in your Cheque Accounts...");
                         }
 
                     }else{
@@ -113,6 +118,11 @@ public class TransactionsController {
              throw new  DataNotFoundException("Account Does Not Exist...");
          }
 
+        transation.setTransactionAccountNo(accountNo);
+        transation.setTransactionType(transactionType);
+        transation.setTransactionAmount(transactionAmount);
+
+        transation = transactionsService.saveTransaction(transation);
 
         return "Account";
     }

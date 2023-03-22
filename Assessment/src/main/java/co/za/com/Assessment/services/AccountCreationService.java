@@ -25,5 +25,9 @@ public class AccountCreationService {
         return accountCreationRepo.updateAccountBalance(accountNo, balance);
     }
 
+    public int UpdateAccountBalanceAndOverDraft(int accountNo, double balance, double overdraft){
+        return accountCreationRepo.updateAccountBalanceAndOverDraft(accountNo, balance, overdraft);
+    }
+
 
 }

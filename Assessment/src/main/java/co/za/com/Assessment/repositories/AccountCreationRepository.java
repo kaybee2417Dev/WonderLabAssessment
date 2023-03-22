@@ -19,4 +19,9 @@ public interface AccountCreationRepository extends CrudRepository<Account, Integ
     @Query(value = "Update tbl_account a SET a.accountbalance = :accountbalance WHERE a.accountno = :accountno", nativeQuery = true)
     public int updateAccountBalance(@Param("accountno") int accountno, @Param("accountbalance") double accountbalance );
 
+    @Transactional
+    @Modifying
+    @Query(value = "Update tbl_account a SET a.accountbalance = :accountbalance , a.accountoverdraft = :accountoverdraft WHERE a.accountno = :accountno", nativeQuery = true)
+    public int updateAccountBalanceAndOverDraft(@Param("accountno") int accountno, @Param("accountbalance") double accountbalance,  @Param("accountoverdraft") double accountoverdraft );
+
 }
