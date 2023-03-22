@@ -1,14 +1,31 @@
 package co.za.com.Assessment.pojo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "tblTransaction")
 public class Transactions {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "transactionid")
     private int transactionID;
+    @Column(name = "transactionaccountno")
+    private int transactionAccountNo;
+    @Column(name = "transactiontype")
     private String transactionType;
+    @Column(name = "transactionamount")
     private String transactionAmount;
 
-    public Transactions(int transactionID, String transactionType, String transactionAmount) {
+    public Transactions(int transactionID, int transactionAccountNo, String transactionType, String transactionAmount) {
         this.transactionID = transactionID;
+        this.transactionAccountNo = transactionAccountNo;
         this.transactionType = transactionType;
         this.transactionAmount = transactionAmount;
+    }
+
+    public Transactions() {
+
     }
 
     public int getTransactionID() {
@@ -17,6 +34,14 @@ public class Transactions {
 
     public void setTransactionID(int transactionID) {
         this.transactionID = transactionID;
+    }
+
+    public int getTransactionAccountNo() {
+        return transactionAccountNo;
+    }
+
+    public void setTransactionAccountNo(int transactionAccountNo) {
+        this.transactionAccountNo = transactionAccountNo;
     }
 
     public String getTransactionType() {

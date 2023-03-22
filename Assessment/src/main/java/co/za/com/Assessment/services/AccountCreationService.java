@@ -15,4 +15,8 @@ public class AccountCreationService {
 
      return accountCreationRepo.save(account);
     }
+
+    public Account findAccountByAccountNo(int accountNo){
+        return accountCreationRepo.findAccountByAccountNo(accountNo);
+    }
 }

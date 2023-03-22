@@ -26,8 +26,6 @@ public class AccountCreationController {
    //default values when accounts get created.
    String accountStatus = "Not Active";
    double accountBalance = 0.0;
-
-
     @RequestMapping(value="/createAccount/{accountType}/{accountName}", method = RequestMethod.POST)
     @ResponseBody
     public Account createccount(@PathVariable String accountType, @PathVariable String accountName){
@@ -38,8 +36,6 @@ public class AccountCreationController {
         }else{
             accountNo = 01 +getRandomNumberString();
         }
-
-      //  System.out.println("account No" + accountNo);
 
         //Set account values
         account.setAccountNo(accountNo);
