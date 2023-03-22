@@ -15,9 +15,9 @@ public class Transactions {
     @Column(name = "transactiontype")
     private String transactionType;
     @Column(name = "transactionamount")
-    private String transactionAmount;
+    private double transactionAmount;
 
-    public Transactions(int transactionID, int transactionAccountNo, String transactionType, String transactionAmount) {
+    public Transactions(int transactionID, int transactionAccountNo, String transactionType, double transactionAmount) {
         this.transactionID = transactionID;
         this.transactionAccountNo = transactionAccountNo;
         this.transactionType = transactionType;
@@ -52,11 +52,11 @@ public class Transactions {
         this.transactionType = transactionType;
     }
 
-    public String getTransactionAmount() {
+    public double getTransactionAmount() {
         return transactionAmount;
     }
 
-    public void setTransactionAmount(String transactionAmount) {
+    public void setTransactionAmount(double transactionAmount) {
         this.transactionAmount = transactionAmount;
     }
 }

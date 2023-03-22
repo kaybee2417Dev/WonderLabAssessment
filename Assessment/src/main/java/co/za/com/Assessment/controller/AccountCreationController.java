@@ -24,7 +24,6 @@ public class AccountCreationController {
     int int_random = ThreadLocalRandom.current().nextInt();
 
    //default values when accounts get created.
-   String accountStatus = "Not Active";
    double accountBalance = 0.0;
     @RequestMapping(value="/createAccount/{accountType}/{accountName}", method = RequestMethod.POST)
     @ResponseBody
@@ -39,7 +38,11 @@ public class AccountCreationController {
 
         //Set account values
         account.setAccountNo(accountNo);
-        account.setAccountStatus(accountStatus);
+        if(accountType.equalsIgnoreCase("savings")){
+            account.setAccountStatus("Not Active");
+        }else{
+            account.setAccountStatus("Active");
+        }
         account.setAccountBalance(accountBalance);
         account.setAccountName(accountName);
         account.setAccountType(accountType);

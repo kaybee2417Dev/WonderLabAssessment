@@ -52,7 +52,7 @@ public class Account {
         this.accountId = accountId;
     }
 
-    public int getAccountNo(int accountNo) {
+    public int getAccountNo() {
         return this.accountNo;
     }
 

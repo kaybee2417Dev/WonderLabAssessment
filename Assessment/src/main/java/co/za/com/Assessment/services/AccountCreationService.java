@@ -19,4 +19,11 @@ public class AccountCreationService {
     public Account findAccountByAccountNo(int accountNo){
         return accountCreationRepo.findAccountByAccountNo(accountNo);
     }
+
+
+    public int UpdateAccountBalance(int accountNo, double balance){
+        return accountCreationRepo.updateAccountBalance(accountNo, balance);
+    }
+
+
 }
