@@ -1,10 +1,22 @@
 package co.za.com.Assessment.pojo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "tblAccount")
 public class Account {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "accountid")
     private int accountId;
+    @Column(name = "accountno")
     private int accountNo;
+    @Column(name = "accounttype")
     private String accountType;
+    @Column(name = "accountname")
     private String accountName;
+    @Column(name = "accountbalance")
     private double accountBalance;
 
     public Account(int accountId, int accountNo, String accountType, String accountName, double accountBalance) {
@@ -13,6 +25,10 @@ public class Account {
         this.accountType = accountType;
         this.accountName = accountName;
         this.accountBalance = accountBalance;
+    }
+
+    public Account() {
+
     }
 
     public int getAccountId() {
