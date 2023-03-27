@@ -13,7 +13,6 @@ public class AssessmentApplication {
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(AssessmentApplication.class);
 		builder.headless(false);
 		ConfigurableApplicationContext context = builder.run(args);
-
 	}
 
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {

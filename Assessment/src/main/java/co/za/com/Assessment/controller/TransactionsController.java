@@ -36,6 +36,7 @@ public class TransactionsController {
     @ResponseBody
     public String fundAccount(@PathVariable int accountNo, @PathVariable String transactionType,@PathVariable double transactionAmount){
 
+        //get Account details
          accountDetails = findAccountDetailsUsingAccountNo(accountNo);
 
          if(accountDetails != null){
@@ -44,7 +45,7 @@ public class TransactionsController {
              accountType = accountDetails.getAccountType();
              overDraftAmount = accountDetails.getAccountOverdraft();
 
-
+                //Cheque Transaction Type
                  if(transactionType.equalsIgnoreCase("Deposit")){
 
                      if(accountType.equalsIgnoreCase("savings") && accountStatus.equalsIgnoreCase("Not Active")){
@@ -57,12 +58,6 @@ public class TransactionsController {
                      accountBalance = accountBalance + transactionAmount;
                      updateAccount = accountService.UpdateAccountBalance(accountNo, accountBalance);
 
-                     /*transation.setTransactionAccountNo(accountNo);
-                     transation.setTransactionType(transactionType);
-                     transation.setTransactionAmount(transactionAmount);
-
-                     transation = transactionsService.saveTransaction(transation);
-                    */
                  }else if(transactionType.equalsIgnoreCase("Withdrawal")){
 
                     if(accountType.equalsIgnoreCase("saving") || accountType.equalsIgnoreCase("savings")&& accountBalance >= 1000){
@@ -120,6 +115,7 @@ public class TransactionsController {
         return "Transaction Successful...";
     }
 
+
     public Account findAccountDetailsUsingAccountNo(int accountNo){
          accountDetails = accountService.findAccountByAccountNo(accountNo);
 
@@ -128,7 +124,6 @@ public class TransactionsController {
         }else{
             throw new DataNotFoundException("Account Number does not exists...");
         }
-
     }
 
 }
